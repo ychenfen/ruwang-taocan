@@ -1,0 +1,14 @@
+{
+  "name": "@ruwang/commission-engine",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "test": "NODE_OPTIONS=--no-experimental-require-module vitest run",
+    "test:watch": "NODE_OPTIONS=--no-experimental-require-module vitest"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5",
+    "vitest": "^2.1.9"
+  }
+}

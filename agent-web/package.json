@@ -1,0 +1,25 @@
+{
+  "name": "@ruwang/agent-web",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "next dev --webpack -p 3002",
+    "build": "next build --webpack",
+    "start": "next start -H 0.0.0.0 -p 3002",
+    "typecheck": "tsc -p tsconfig.json --noEmit --incremental false"
+  },
+  "dependencies": {
+    "next": "16.1.6",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "swr": "^2.3.6",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "typescript": "^5.4.5"
+  }
+}

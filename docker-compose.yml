@@ -1,0 +1,16 @@
+name: ruwang
+
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: ruwang
+      POSTGRES_PASSWORD: ruwang
+      POSTGRES_DB: ruwang
+    ports:
+      - "5432:5432"
+    volumes:
+      - ruwang_pg:/var/lib/postgresql/data
+
+volumes:
+  ruwang_pg:

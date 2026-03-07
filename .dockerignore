@@ -1,0 +1,11 @@
+node_modules
+**/node_modules
+.git
+.github
+admin-web
+agent-web
+docs
+:memory:
+backend/.data
+*.log
+

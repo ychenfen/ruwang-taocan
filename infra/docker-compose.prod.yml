@@ -1,0 +1,40 @@
+name: ruwang-prod
+
+services:
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-ruwang}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-ruwang}
+      POSTGRES_DB: ${POSTGRES_DB:-ruwang}
+      TZ: ${TZ:-Asia/Shanghai}
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    volumes:
+      - ruwang_pg_prod:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-ruwang} -d ${POSTGRES_DB:-ruwang}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build:
+      context: ..
+      dockerfile: backend/Dockerfile
+    restart: unless-stopped
+    environment:
+      PORT: 3000
+      TZ: ${TZ:-Asia/Shanghai}
+      JWT_SECRET: ${JWT_SECRET:?JWT_SECRET is required}
+      DATABASE_URL: postgres://${POSTGRES_USER:-ruwang}:${POSTGRES_PASSWORD:-ruwang}@db:5432/${POSTGRES_DB:-ruwang}
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "${BACKEND_PORT:-3000}:3000"
+
+volumes:
+  ruwang_pg_prod:
+

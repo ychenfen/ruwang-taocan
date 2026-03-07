@@ -1,0 +1,39 @@
+{
+  "name": "ruwang-taocan",
+  "private": true,
+  "workspaces": [
+    "backend",
+    "admin-web",
+    "agent-web",
+    "shared/commission-engine"
+  ],
+  "scripts": {
+    "test": "npm -w shared/commission-engine test && npm -w backend test",
+    "test:watch": "npm -w shared/commission-engine run test:watch",
+    "dev:backend": "JWT_SECRET=${JWT_SECRET:-change-me-change-me} TZ=${TZ:-Asia/Shanghai} npm -w backend run dev",
+    "dev:admin": "npm -w admin-web run dev",
+    "dev:agent": "npm -w agent-web run dev",
+    "dev:all": "npm run migrate && npm run seed && concurrently -k -n backend,admin,agent \"npm run dev:backend\" \"npm run dev:admin\" \"npm run dev:agent\"",
+    "dev:all:fast": "concurrently -k -n backend,admin,agent \"npm run dev:backend\" \"npm run dev:admin\" \"npm run dev:agent\"",
+    "start:backend": "TZ=${TZ:-Asia/Shanghai} npm -w backend run start",
+    "start:admin": "npm -w admin-web run start",
+    "start:agent": "npm -w agent-web run start",
+    "start:all": "concurrently -k -n backend,admin,agent \"npm run start:backend\" \"npm run start:admin\" \"npm run start:agent\"",
+    "build:all": "npm -w admin-web run build && npm -w agent-web run build",
+    "migrate": "TZ=${TZ:-Asia/Shanghai} npm -w backend run migrate",
+    "seed": "TZ=${TZ:-Asia/Shanghai} npm -w backend run seed",
+    "perf:baseline": "TZ=${TZ:-Asia/Shanghai} npm -w backend run perf:baseline",
+    "typecheck": "npm -w backend run typecheck",
+    "verify": "npm test && npm run typecheck && npm -w admin-web run build && npm -w agent-web run build",
+    "smoke:live": "node scripts/smoke-live.mjs",
+    "server:prepare": "bash scripts/server-prepare.sh",
+    "server:start": "bash scripts/server-start.sh",
+    "server:stop": "bash scripts/server-stop.sh",
+    "server:restart": "npm run server:stop && npm run server:start",
+    "server:status": "bash scripts/server-status.sh",
+    "server:health": "bash scripts/server-health.sh"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}
